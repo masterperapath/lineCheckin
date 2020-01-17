@@ -1,145 +1,40 @@
-# LINE Messaging API SDK for Java
+# line-bot-spring-boot-medium
 
-[![Build Status](https://travis-ci.org/line/line-bot-sdk-java.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-java)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.linecorp.bot/line-bot-model/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.linecorp.bot/line-bot-model)
-[![javadoc](https://javadoc.io/badge2/com.linecorp.bot/line-bot-model/javadoc.svg)](https://javadoc.io/doc/com.linecorp.bot/line-bot-model)
-[![codecov](https://codecov.io/gh/line/line-bot-sdk-java/branch/master/graph/badge.svg)](https://codecov.io/gh/line/line-bot-sdk-java)
+[![Build Status](https://travis-ci.org/iphayao/line-bot-spring-boot-medium.svg?branch=master)](https://travis-ci.org/iphayao/line-bot-spring-boot-medium)
 
-
-## Introduction
-
-The LINE Messaging API SDK for Java makes it easy to develop bots using LINE Messaging API, and you can create a sample bot within minutes.
+Code example in [medium](https://medium.com/@phayao/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-line-bot-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-spring-boot-step-by-step-607d501cb3a6)'s story **[LINE Bot with Spring Boot Step-by-Step]**
 
 
-## Documentation
+# How to run
+After cloned this repo into your local machine, if you want to run locally, follow this step.
 
-See the official API documentation for more information.
+## Configuration .yml file
+Open application.yml file `src/main/resources/application.yml` replace `channel-token` and `channel-secret` value with your particular values from LINE developer console.
 
-- English: https://developers.line.biz/en/docs/messaging-api/overview/
-- Japanese: https://developers.line.biz/ja/docs/messaging-api/overview/
-
-
-## Requirements
-
-This library requires Java 8 or later.
-
-
-## Installation
-
-We've uploaded this library to the Maven Central Repository. You can install the modules using Maven or Gradle.
-
-http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.linecorp.bot%22
-
-
-## Modules
-
-This project contains the following modules:
-
- * line-bot-api-client: API client library for the Messaging API
- * line-bot-model: Model classes for the Messaging API
- * line-bot-servlet: Java servlet utilities for bot servers
- * line-bot-spring-boot: Spring Boot auto configuration library for bot servers
-
-This project contains the following sample projects:
-
- * sample-spring-boot-echo: A simple echo server. It includes a Heroku button.
- * sample-spring-boot-kitchensink: Full featured sample code.
-
-
-## Spring Boot integration
-
-The line-bot-spring-boot module lets you build a bot application as a Spring Boot application.
-
-```java
-/*
- * Copyright 2016 LINE Corporation
- *
- * LINE Corporation licenses this file to you under the Apache License,
- * version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at:
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- */
-
-package com.example.bot.spring.echo;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.linecorp.bot.model.event.Event;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.spring.boot.annotation.EventMapping;
-import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-
-@SpringBootApplication
-@LineMessageHandler
-public class EchoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(EchoApplication.class, args);
-    }
-
-    @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        System.out.println("event: " + event);
-        return new TextMessage(event.getMessage().getText());
-    }
-
-    @EventMapping
-    public void handleDefaultMessageEvent(Event event) {
-        System.out.println("event: " + event);
-    }
-}
+```yml:application.yml
+line.bot:
+  channel-token: 'Put Your Channel Token Here.'
+  channel-secret: 'Put Your Channel Secret Here.'
+  handler.path: /callback
 ```
 
-## How do I use a proxy server?
+## Run Spring Boot
+To run application in your local machine use this command:
 
-You can use `LineMessagingServiceBuilder` to configure a proxy server. It accepts your own OkHttpBuilder instance.
+```
+$ mvn spring-boot:run
 
-Note: You don't need to use an add-on like Fixie to have static IP addresses for proxy servers. You can make API calls without entering IP addresses on the server IP whitelist.
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.4.RELEASE)
 
+........
 
-## Help and media
-FAQ: https://developers.line.biz/en/faq/
+INFO 35569 --- [main] com.iphayao.linebot.Application   : Started Application in 4.393 seconds (JVM running for 9.056)
+```
 
-Community Q&A: https://www.line-community.me/questions
-
-News: https://developers.line.biz/en/news/
-
-Twitter: [@LINE_DEV](https://twitter.com/LINE_DEV)
-
-
-## Versioning
-
-This project respects semantic versioning.
-
-See http://semver.org/.
-
-
-## Contributing
-
-Please check [CONTRIBUTING](CONTRIBUTING.md) before making a contribution.
-
-
-## License
-
-    Copyright (C) 2016 LINE Corp.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+# Done! 完了
